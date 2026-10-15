@@ -3,23 +3,39 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "node scripts/dev.mjs",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit",
+    "test:e2e": "playwright test",
+    "telegram:status": "node --experimental-strip-types scripts/telegram.mjs status",
+    "telegram:connect": "node --experimental-strip-types scripts/telegram.mjs connect",
+    "test:telegram": "node --experimental-strip-types --test tests/telegram.test.mjs",
+    "test:inquiry": "node --experimental-strip-types --test tests/inquiry.test.mjs",
+    "telegram:poll": "node --experimental-strip-types scripts/telegram.mjs poll",
+    "telegram:webhook": "node --experimental-strip-types scripts/telegram.mjs webhook",
+    "format": "prettier --write app components data types tests scripts playwright.config.ts"
   },
   "dependencies": {
+    "lucide-react": "^1.55.0",
+    "motion": "^14.1.0",
     "next": "16.4.0",
+    "nodemailer": "^10.1.0",
+    "page-mascot": "^0.1.0",
     "react": "19.3.0",
     "react-dom": "19.3.0"
   },
   "devDependencies": {
+    "@playwright/test": "^1.64.0",
     "@tailwindcss/turbopack": "^4",
     "@types/node": "^20",
+    "@types/nodemailer": "^8.0.2",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.4.0",
+    "prettier": "^3.9.10",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

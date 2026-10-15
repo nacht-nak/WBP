@@ -1,0 +1,7 @@
+Illustrative placeholder photographs from Unsplash, not personal photos.
+Replace these files or their paths in data/interests.ts with your own photographs.
+
+Travel: https://images.unsplash.com/photo-1506905925346-21bda4d32df4
+Gym: https://images.unsplash.com/photo-1534438327276-14e5300c3a48
+Work: https://images.unsplash.com/photo-1497215728101-856f4ea42174
+

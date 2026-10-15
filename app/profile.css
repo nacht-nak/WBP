@@ -1,0 +1,231 @@
+/* Profile introduction styled after the supplied visual reference. */
+.profile-intro {
+  padding: 64px 0 90px;
+  min-height: 612px;
+}
+.intro-identity {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+.intro-avatar {
+  flex: 0 0 160px;
+  width: 160px;
+  height: 160px;
+  animation: profile-enter 0.6s ease-out both;
+}
+.intro-avatar img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--border);
+  box-shadow: 0 2px 3px #00000014;
+}
+.intro-avatar .profile-mascot {
+  width: 100% !important;
+  height: 100% !important;
+  border-radius: 50%;
+  -webkit-tap-highlight-color: transparent;
+}
+.profile-mascot:focus-visible {
+  outline: 2px solid var(--muted);
+  outline-offset: 5px;
+}
+.intro-name {
+  min-width: 0;
+}
+.intro-name h1 {
+  display: block;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.65px;
+  line-height: 1.25;
+}
+.intro-badge {
+  display: inline-block;
+  margin-left: 9px;
+  vertical-align: -2px;
+  color: #fff;
+  fill: #1d9bf0;
+  stroke-width: 2.6px;
+  flex-shrink: 0;
+}
+.intro-name .social-links {
+  gap: 10px;
+  margin-top: 10px;
+}
+.intro-name .social-links a,
+.intro-name .social-unavailable {
+  width: 20px;
+  height: 24px;
+  color: #737c88;
+}
+.intro-name .social-links svg {
+  width: 19px;
+  height: 19px;
+}
+.intro-role {
+  margin: 19px 0 24px;
+  font-size: 34px;
+  font-weight: 400;
+  line-height: 1.45;
+  letter-spacing: -0.95px;
+}
+.intro-role > span {
+  font-weight: 300;
+  color: var(--muted);
+}
+.intro-description {
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 1.9;
+  color: var(--muted);
+}
+.inline-tech {
+  display: inline-flex;
+  vertical-align: middle;
+  align-items: center;
+  gap: 5px;
+  height: 30px;
+  margin: 0 2px 3px;
+  padding: 0 9px;
+  border: 1px dashed #d2d7de;
+  border-radius: 5px;
+  color: var(--foreground);
+  font-size: 12px;
+  line-height: 1;
+  font-weight: 400;
+  white-space: nowrap;
+}
+.tech-laravel svg {
+  color: #ff4545;
+}
+.tech-react svg {
+  color: #32bbdf;
+}
+.tech-next svg {
+  color: var(--foreground);
+}
+.tech-mysql svg {
+  color: #3276a5;
+}
+.intro-actions {
+  margin-top: 31px;
+}
+.intro-resume {
+  min-height: 48px;
+  padding: 0 23px;
+  gap: 9px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 700;
+}
+.intro-resume:hover {
+  background: #303030;
+}
+.floating-contact {
+  position: fixed;
+  right: 10px;
+  bottom: 19px;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 11px;
+  min-height: 48px;
+  padding: 0 23px;
+  color: var(--background);
+  background: var(--foreground);
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  box-shadow: 0 4px 12px #00000012;
+  transition:
+    transform 0.2s,
+    background 0.2s;
+}
+.floating-contact:hover {
+  transform: translateY(-2px);
+  background: #303030;
+  color: #fff;
+}
+@media (max-width: 650px) {
+  .profile-intro {
+    padding: 42px 0 65px;
+    min-height: 590px;
+  }
+  .intro-identity {
+    gap: 19px;
+  }
+  .intro-avatar {
+    flex-basis: 108px;
+    width: 108px;
+    height: 108px;
+  }
+  .intro-name h1 {
+    font-size: 23px;
+    line-height: 1.3;
+    letter-spacing: -0.4px;
+    gap: 6px;
+  }
+  .intro-badge {
+    width: 19px;
+    height: 19px;
+  }
+  .intro-role {
+    font-size: 28px;
+    line-height: 1.4;
+    margin: 25px 0 20px;
+    letter-spacing: -0.6px;
+  }
+  .intro-description {
+    font-size: 17px;
+    line-height: 1.95;
+  }
+  .intro-actions {
+    margin-top: 28px;
+  }
+  .floating-contact {
+    right: 16px;
+    bottom: 16px;
+    min-height: 46px;
+    padding: 0 16px;
+    font-size: 12px;
+  }
+}
+@media (max-width: 380px) {
+  .intro-avatar {
+    flex-basis: 86px;
+    width: 86px;
+    height: 86px;
+  }
+  .intro-identity {
+    gap: 15px;
+  }
+  .intro-name h1 {
+    font-size: 20px;
+  }
+  .intro-role {
+    font-size: 26px;
+  }
+  .intro-description {
+    font-size: 16px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .profile-mascot > span > span:first-child {
+    background-position: 50% 50% !important;
+  }
+  .intro-avatar {
+    animation: none;
+  }
+  .floating-contact {
+    transition: none;
+  }
+}
+@media print {
+  .floating-contact {
+    display: none;
+  }
+}
