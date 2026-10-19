@@ -1,5 +1,44 @@
 import { test, expect } from "@playwright/test";
 
+test("storage outages preserve drafts, back off, and recover without reopening", async ({
+  page,
+}) => {
+  let available = false;
+  let polls = 0;
+  await page.route("**/api/messages", (route) => {
+    polls++;
+    return route.fulfill(
+      available
+        ? { json: { connected: true, aiAvailable: true, messages: [] } }
+        : { status: 503, json: { error: "Storage unavailable" } },
+    );
+  });
+  await page.goto("/");
+  await page.clock.install();
+  await page.getByRole("button", { name: "Chat with Wel" }).click();
+  const input = page.getByRole("textbox", { name: "Your message" });
+  const send = page.getByRole("button", { name: "Send message" });
+  await input.fill("Please keep this draft");
+  await expect(
+    page.getByText("Chat is temporarily unavailable.", { exact: false }),
+  ).toBeVisible();
+  await expect(send).toBeDisabled();
+  await expect(page.getByRole("link", { name: "email Wel" })).toHaveAttribute(
+    "href",
+    /^mailto:/,
+  );
+  expect(polls).toBe(1);
+  await page.clock.runFor(6000);
+  await expect.poll(() => polls).toBe(2);
+  await page.clock.runFor(3000);
+  expect(polls).toBe(2);
+  available = true;
+  await page.clock.runFor(9000);
+  await expect(send).toBeEnabled();
+  await expect(input).toHaveValue("Please keep this draft");
+  await expect(page.getByRole("link", { name: "email Wel" })).toHaveCount(0);
+});
+
 test("one chat shows AI and personal replies and restores after reload", async ({
   page,
 }) => {

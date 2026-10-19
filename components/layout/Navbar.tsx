@@ -3,7 +3,12 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { Menu, Moon, Sun, X, ArrowUpRight } from "lucide-react";
-const links = ["Projects", "Experience", "Highlights", "Contact"];
+const links = [
+  { label: "Projects", id: "projects" },
+  { label: "Experience", id: "experience" },
+  { label: "Certificates", id: "certifications" },
+  { label: "Contact", id: "contact" },
+];
 export function Navbar() {
   const pathname = usePathname();
   const [active, setActive] = useState("");
@@ -20,8 +25,8 @@ export function Navbar() {
       },
       { rootMargin: "-15% 0px -55% 0px", threshold: 0 },
     );
-    links.forEach((label) => {
-      const section = document.getElementById(label.toLowerCase());
+    links.forEach(({ id }) => {
+      const section = document.getElementById(id);
       if (section) observer.observe(section);
     });
     return () => observer.disconnect();
@@ -58,17 +63,18 @@ export function Navbar() {
         <div className="nav-right">
           <nav aria-label="Main navigation" className="desktop-nav">
             {links
-              .filter((label) => label !== "Contact")
-              .map((label) => (
+              .filter(({ id }) => id !== "contact")
+              .map(({ label, id }) => (
                 <Link
                   key={label}
                   className={
-                    (pathname === "/" && active === label.toLowerCase()) ||
-                    (label === "Projects" && pathname.startsWith("/projects"))
+                    (pathname === "/" && active === id) ||
+                    (id === "projects" && pathname.startsWith("/projects")) ||
+                    (id === "certifications" && pathname === "/certifications")
                       ? "active"
                       : ""
                   }
-                  href={`/#${label.toLowerCase()}`}
+                  href={`/#${id}`}
                 >
                   {label}
                 </Link>
@@ -100,10 +106,10 @@ export function Navbar() {
           id="mobile-navigation"
           aria-label="Mobile navigation"
         >
-          {links.map((label) => (
+          {links.map(({ label, id }) => (
             <Link
               key={label}
-              href={`/#${label.toLowerCase()}`}
+              href={`/#${id}`}
               onClick={() => setOpen(false)}
             >
               {label}

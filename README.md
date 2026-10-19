@@ -57,6 +57,33 @@ The Outside the IDE stack advances on click, tap, Enter, or Space. Its current T
 
 ## Combined Groq and Telegram chat
 
+### Vercel: fix `/api/messages` and `/api/visits` returning 503
+
+Both features require shared Redis storage on Vercel. Pushing the code and adding
+Telegram/Groq credentials alone is insufficient; `.env.local` stays on your computer.
+
+1. Create an Upstash **Redis** database and connect it to this Vercel project using
+   the [Upstash integration](https://upstash.com/docs/redis/howto/vercelintegration).
+2. In Vercel → Project → Settings → Environment Variables, ensure these exact names
+   exist for **Production**: `UPSTASH_REDIS_REST_URL` (the HTTPS REST endpoint) and
+   `UPSTASH_REDIS_REST_TOKEN` (the read/write REST token, not the read-only token).
+   This app does not read `REDIS_URL` or `KV_REST_API_*`; copy the corresponding
+   REST credentials into the exact `UPSTASH_*` names if the integration uses other names.
+3. Keep `GROQ_API_KEY`, `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`, and
+   `TELEGRAM_WEBHOOK_SECRET` in that environment. Set
+   `SITE_URL=https://wpanogaling.vercel.app`. Never prefix secrets with `NEXT_PUBLIC_`.
+4. Redeploy the production deployment. Environment changes only affect new
+   deployments. Reopen chat and send a message; `/api/messages` should return 200,
+   and `/api/visits` should return a count.
+5. For personal Telegram replies, stop the local polling worker. Set the same
+   `SITE_URL`, bot token, and webhook secret in your ignored `.env.local`, then run
+   `npm.cmd run telegram:webhook` from `frontend`. Reply to the visitor's message
+   using Telegram's **Reply** action. Groq answers do not need this webhook.
+
+The browser preserves an unsent draft during storage outages, offers an email
+link, and slows reconnection attempts to at most once per minute after repeated
+failures. These UI safeguards do not replace the required Redis configuration.
+
 **Contact Welquim** opens one shared conversation. Each visitor message is saved, sent to Telegram when configured, and answered by Groq. An unavailable Telegram connection does not prevent AI answers, and an AI failure does not prevent Telegram delivery. The simplified interface shows both replies in one conversation and reports delivery failures with a retry action. In Telegram, use **Reply** on the visitor's message to send a personal answer back to that browser. The first personal reply pauses AI for the conversation, including AI responses still being generated. The API also supports starting a fresh session with DELETE /api/messages. History survives refreshes in the same browser.
 
 Only the configured owner's private text replies are accepted; group messages, other senders, attachments, and unthreaded messages are ignored. Reply mappings and polling offsets are scoped to the bot, so replacing a bot token cannot misroute replies from another bot.

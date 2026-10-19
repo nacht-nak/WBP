@@ -20,7 +20,7 @@ export async function Footer() {
           <span>/</span>
           <span>Philippines</span>
           <span>/</span>
-          <span>© {year}</span>
+          <span>Hinoba-an</span>
         </div>
       </div>
       <div className="footer-right">

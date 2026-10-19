@@ -64,23 +64,6 @@ test("project filters and detail pages work", async ({ page }) => {
   await expect(page.locator(".project-card")).toContainText("Barangay");
 });
 
-test("highlights filter updates content and pressed state", async ({
-  page,
-}) => {
-  await page.goto("/#highlights");
-  const section = page.locator("#highlights");
-  await section.getByRole("button", { name: "Education", exact: true }).click();
-  await expect(section.locator(".highlight-card")).toHaveCount(1);
-  await expect(
-    section.getByRole("heading", { name: "Always a student of the craft" }),
-  ).toBeVisible();
-  await expect(
-    section.getByRole("button", { name: "Education", exact: true }),
-  ).toHaveAttribute("aria-pressed", "true");
-  await section.getByRole("button", { name: "All", exact: true }).click();
-  await expect(section.locator(".highlight-card")).toHaveCount(3);
-});
-
 test("theme persists across reloads", async ({ page }) => {
   await page.goto("/");
   await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");

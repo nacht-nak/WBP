@@ -31,7 +31,8 @@ export async function GET(request: NextRequest) {
     const current = request.cookies.get(cookieName)?.value;
     const existing = validSession(current);
     const token = existing ? current : newSession();
-    const conversation = existing ? await getConversation(token) : null;
+    // Check storage even for first-time visitors before enabling the composer.
+    const conversation = await getConversation(token);
     return response(
       {
         connected: telegramConfigured(),

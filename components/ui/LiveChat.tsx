@@ -48,6 +48,7 @@ export function LiveChat({ active }: { active: boolean }) {
     input.current?.focus();
     const controller = new AbortController();
     let timer: ReturnType<typeof setTimeout>;
+    let failures = 0;
     async function refresh() {
       try {
         if (!pending.current || activeMessage.current) {
@@ -77,12 +78,24 @@ export function LiveChat({ active }: { active: boolean }) {
           setAIAvailable(data.aiAvailable === true);
           setHumanMode(data.humanMode === true);
           setSyncError(false);
+          failures = 0;
         }
       } catch {
-        if (!controller.signal.aborted) setSyncError(true);
+        if (!controller.signal.aborted) {
+          failures++;
+          setSyncError(true);
+          setConnected(null);
+        }
       } finally {
         if (!controller.signal.aborted)
-          timer = setTimeout(refresh, activeMessage.current ? 1000 : 3000);
+          timer = setTimeout(
+            refresh,
+            failures
+              ? Math.min(3000 * 2 ** Math.min(failures, 5), 60000)
+              : activeMessage.current
+                ? 1000
+                : 3000,
+          );
       }
     }
     void refresh();
@@ -181,7 +194,9 @@ export function LiveChat({ active }: { active: boolean }) {
         )}
         {syncError && (
           <p className="chat-error" role="status">
-            Unable to check for replies. Reconnecting…
+            Chat is temporarily unavailable. Your draft will stay here while we
+            reconnect. You can also{" "}
+            <a href={`mailto:${profile.email}`}>email Wel</a>.
           </p>
         )}
         <div
@@ -205,9 +220,7 @@ export function LiveChat({ active }: { active: boolean }) {
               </span>
               <div className="chat-bubble">
                 {message.role === "owner" && (
-                  <span className="chat-personal-label">
-                    Wel 
-                  </span>
+                  <span className="chat-personal-label">Wel</span>
                 )}
                 <p>{message.content}</p>
               </div>
@@ -220,7 +233,7 @@ export function LiveChat({ active }: { active: boolean }) {
             <div
               className="chat-thinking"
               role="status"
-              aria-label="Wel's AI is typing"
+              aria-label="Wel's is typing"
             >
               <span />
               <span />

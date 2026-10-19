@@ -45,15 +45,10 @@ export function ContactChat() {
           <header className="chat-header">
             <span className="chat-avatar">
               <Image src={profile.photo} alt="" width={36} height={36} />
-              <span className="chat-presence" aria-hidden="true" />
             </span>
-          <div className="chat-heading">
-  <h2 id="chat-title">Chat with Wel</h2>
-  <p className="chat-status">
-    <span className="status-dot" />
-    ONLINE
-  </p>
-</div>
+            <div className="chat-heading">
+             <h2 id="chat-title">Chat with wel</h2>
+            </div>
             <button
               type="button"
               className="chat-icon-button"

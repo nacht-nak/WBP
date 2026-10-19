@@ -6,7 +6,6 @@ import { Projects } from "@/components/sections/Projects";
 import { Technologies } from "@/components/sections/Technologies";
 import { Education } from "@/components/sections/Education";
 import { Certifications } from "@/components/sections/Certifications";
-import { Highlights } from "@/components/sections/Highlights";
 import { GithubActivity } from "@/components/sections/GithubActivity";
 import { Contact } from "@/components/sections/Contact";
 import { OutsideIDE } from "@/components/sections/OutsideIDE";
@@ -18,7 +17,6 @@ export default function Home() {
       <Community />
       <FeaturedWork />
       <Projects />
-      <Highlights />
       <Technologies />
       <Certifications />
       <Education />
