@@ -1,5 +1,5 @@
-﻿# Welquim Panogaling — Portfolio
 
+<<<<<<< HEAD
 A responsive portfolio built in the existing Next.js 16 App Router starter with React, TypeScript, Tailwind CSS 4, Motion, and Lucide. The latest design follows the supplied screenshots: a narrow column, interactive character avatar, compact identity row, light introduction text, inline technology badges, and a floating contact link. Lato (300, 400, 700) is self-hosted with `next/font/local` as a visual match for the reference; font licenses are in `public/fonts/`.
 
 ## Run locally
@@ -161,3 +161,5 @@ For Vercel or other serverless/multiple-instance hosting, configure `UPSTASH_RED
 The existing root-level `app/` architecture is preserved. `components/layout/`, `components/sections/`, `components/ui/`, `components/projects/`, and `components/meeting/` separate layouts, reusable elements, and interactive features. Static page composition stays in Server Components; navigation, filters, animations, and the scheduling request form use Client Components. Design tokens, responsive rules, dark mode, and print styles live in `app/globals.css`; the reference-inspired profile layout lives in `app/profile.css`.
 
 To refresh bundled fonts, run `node scripts/download-fonts.mjs` with internet access. Ordinary builds do not need external font access.
+=======
+>>>>>>> 1ae2bda11e7cb7fff9ea1fa21c3670910af59dfb
