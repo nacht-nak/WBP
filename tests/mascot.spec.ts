@@ -5,7 +5,9 @@ test("profile avatar loads its sheets and follows the pointer in all directions"
   request,
 }) => {
   for (const sheet of ["directions", "reactions"]) {
-    const response = await request.get(`/mascots/welquim-${sheet}.webp`);
+    const response = await request.get(
+      `/mascots/welquim-portrait-${sheet}.webp`,
+    );
     expect(response.ok()).toBe(true);
     expect(response.headers()["content-type"]).toContain("image/webp");
   }
@@ -13,6 +15,13 @@ test("profile avatar loads its sheets and follows the pointer in all directions"
   const avatar = page.getByRole("button", { name: "Boop the Welquim avatar" });
   await expect(avatar).toBeVisible();
   const direction = avatar.locator("span > span").first();
+  await expect(direction).toHaveCSS(
+    "background-image",
+    /welquim-portrait-directions\.webp/,
+  );
+  await page.locator(".profile-intro").screenshot({
+    path: "artifacts/portrait-desktop.png",
+  });
   const box = (await avatar.boundingBox())!;
   const cx = box.x + box.width / 2;
   const cy = box.y + box.height / 2;
@@ -61,17 +70,21 @@ test("avatar reacts to taps and fits the mobile profile", async ({
   browser,
 }) => {
   const context = await browser.newContext({
+    baseURL: test.info().project.use.baseURL,
     viewport: { width: 390, height: 844 },
     isMobile: true,
     hasTouch: true,
   });
   try {
     const page = await context.newPage();
-    await page.goto("http://127.0.0.1:3001/");
+    await page.goto("/");
     const avatar = page.getByRole("button", {
       name: "Boop the Welquim avatar",
     });
     await expect(avatar).toHaveCSS("width", "108px");
+    await page.locator(".profile-intro").screenshot({
+      path: "artifacts/portrait-mobile.png",
+    });
     await avatar.tap();
     await expect(avatar.locator("span > span").last()).toHaveCSS(
       "opacity",

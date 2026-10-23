@@ -20,7 +20,7 @@
   "dependencies": {
     "lucide-react": "^1.55.0",
     "motion": "^14.1.0",
-    "next": "16.4.0",
+    "next": "^16.4.3",
     "nodemailer": "^10.1.0",
     "page-mascot": "^0.1.0",
     "react": "19.3.0",

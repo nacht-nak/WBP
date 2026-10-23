@@ -13,8 +13,8 @@ export default function CertificationsPage() {
       <div className="page-intro">
         <h1>Certifications &amp; training</h1>
         <p>
-          A record of professional credentials and continued learning. Verified
-          details will appear here as they are added.
+          Research, professional memberships, technical training, and continued
+          learning. Select a certificate to see its image and learn more.
         </p>
       </div>
       <CredentialsList />

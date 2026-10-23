@@ -1,4 +1,5 @@
-import { ArrowUpRight, Code2, Globe2 } from "lucide-react";
+import Image from "next/image";
+import { ArrowUpRight } from "lucide-react";
 import { AnimatedReveal } from "@/components/ui/AnimatedReveal";
 export function Community() {
   return (
@@ -14,32 +15,30 @@ export function Community() {
           shape the way I build.
         </p>
         <span className="muted text-xs">
-          Community memberships to be added.
+          Individual member · PSITE Region VI
         </span>
       </AnimatedReveal>
       <AnimatedReveal delay={0.1}>
-        <div className="membership-card">
-          <div className="membership-top">
-            <Code2 size={25} />
-            <span>THE DEVELOPER’S MINDSET</span>
-            <ArrowUpRight size={19} />
-          </div>
-          <div className="membership-title">
-            Keep learning.
-            <br />
-            Keep building.
-          </div>
-          <div className="membership-bottom">
-            <div>
-              <strong>Welquim Panogaling</strong>
-              <span>Full-Stack Web Developer</span>
-            </div>
-            <Globe2 size={29} strokeWidth={1} />
-          </div>
-        </div>
-        <div className="card-caption">
-          A little curiosity goes a long way. <span>↗</span>
-        </div>
+        <a
+          className="community-membership"
+          href="https://psite.org/"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Visit PSITE, our community (opens in a new tab)"
+        >
+          <span className="membership-card">
+            <Image
+              src="/images/psite-membership.png"
+              alt="Welquim Panogaling’s PSITE Region VI membership card for 2026"
+              width={2000}
+              height={680}
+              sizes="(max-width: 650px) 725px, 620px"
+            />
+          </span>
+          <span className="card-caption">
+            Visit our community <ArrowUpRight size={20} aria-hidden="true" />
+          </span>
+        </a>
       </AnimatedReveal>
     </section>
   );
